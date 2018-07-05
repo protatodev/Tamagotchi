@@ -14,6 +14,7 @@ namespace Tamagotchi.Models
         private int mins;
         private int seconds;
         private bool isDead = false;
+        Random rand = new Random();
 
         public Pet(string name)
         {
@@ -34,16 +35,16 @@ namespace Tamagotchi.Models
 
         public void DeclineStats()
         {
-            Hunger -= 3;
-            Energy -= 3;
-            Happiness -= 3;
+            Hunger -= 7;
+            Energy -= 7;
+            Happiness -= 7;
         }
 
         public void UpdateAttributes(string attrArgs)
         {
             StartThread();
             int decrimenter = 0;
-            int incrimenter = 25;
+            int incrimenter = rand.Next(20, 37);
             int currentMins = DateTime.Now.Minute;
             int currentSeconds = DateTime.Now.Second;
             int timeDifference = ((currentMins * 60) + currentSeconds) - ((mins * 60) + seconds);

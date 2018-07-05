@@ -1,7 +1,9 @@
-﻿h3 {
+﻿#dead {
     color: red;
 }
 
 body {
     text-align: center;
+    margin-left: 25%;
 }
+
