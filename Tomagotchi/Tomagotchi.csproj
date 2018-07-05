@@ -13,5 +13,11 @@
     <Folder Include="Controllers\" />
     <Folder Include="Views\Home\" />
     <Folder Include="Views\Splash\" />
+    <Folder Include="Views\Shared\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\PetAttribute.cs" />
   </ItemGroup>
 </Project>

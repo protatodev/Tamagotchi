@@ -1,26 +1,33 @@
-﻿<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <title>Hello friend!</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="container">
-        <div>
-            <h1>@Model.GetName()</h1>
-        </div>
-        <div class="row">
-            <div class="col">
-                <a class="btn btn-primary" href="/feed" role="button">Feed</a>
-            </div>
-            <div class="col">
-                <a class="btn btn-primary" href="/play" role="button">Play</a>
-            </div>
-            <div class="col">
-                <a class="btn btn-primary" href="/sleep" role="button">Sleep</a>
-            </div>
-        </div>
+﻿@{
+    Layout = "_Layout";
+}
+
+<div>
+    <h1>@Model.Name</h1>
+</div>
+<div class="row">
+    <div class="col">
+        @{
+            if(Model.CheckIfDead() == true)
+            {
+                <img src="http://www.ricedigital.co.uk/wp-content/uploads/2015/08/tumblr_np6qh5cjLo1u3e4cro1_r1_500.gif">
+                <h3>Pet Status: Dead</h3>
+            }
+            else
+            {
+                <img src="https://vignette.wikia.nocookie.net/pokemon/images/a/a0/Flareon-AttackAnimation-XY-2.gif/revision/latest?cb=20160822140906">
+                <h4>Hunger: @Model.Hunger</h4>
+                <h4>Energy: @Model.Energy</h4>
+                <h4>Happiness: @Model.Happiness</h4>
+
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-primary" href="/feed" role="button">Feed</a>
+                        <a class="btn btn-primary" href="/play" role="button">Play</a>
+                        <a class="btn btn-primary" href="/sleep" role="button">Sleep</a>
+                    </div>
+                </div>
+            }
+        }
     </div>
-   </body>
-</html>
+</div>

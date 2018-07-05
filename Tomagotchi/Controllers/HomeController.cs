@@ -8,6 +8,7 @@ namespace Tamagotchi.Controllers
 {
     public class HomeController : Controller
     {
+
         [HttpGet("/form")]
         public ActionResult Form()
         {
@@ -17,38 +18,36 @@ namespace Tamagotchi.Controllers
         [HttpGet("/game")]
         public ActionResult Game()
         {
-            List<Item> petStatus = Item.GetAll();
-            return View(petStatus[0]);
+            return View(Pet.myPets[0]);
+
         }
 
         [HttpPost("/game")]
         public ActionResult GamePost()
         {
-            Item newName = new Item(Request.Form["new-name"]);                
-            return View("Game", newName);
+            Pet myPet = new Pet(Request.Form["new-name"]);
+            return View("Game", myPet);
         }
-
 
         [HttpGet("/feed")]
         public ActionResult Feed()
         {
+            Pet.myPets[0].UpdateAttributes("feed");
             return View();
         }
 
         [HttpGet("/play")]
         public ActionResult Play()
         {
+            Pet.myPets[0].UpdateAttributes("play");
             return View();
         }
 
         [HttpGet("/sleep")]
         public ActionResult Sleep()
         {
+            Pet.myPets[0].UpdateAttributes("sleep");
             return View();
         }
-
-
-
-
     }
 }

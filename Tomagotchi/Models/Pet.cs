@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Threading;
 using System.Collections.Generic;
-
 
 namespace Tamagotchi.Models
 {
@@ -10,26 +10,112 @@ namespace Tamagotchi.Models
         public int Hunger { get; set; }
         public int Energy { get; set; }
         public int Happiness { get; set; }
-        private static List<Pet> pets = new List<Pet> { };
-        private PetAttribute attributes = new PetAttribute();
+        public static List<Pet> myPets = new List<Pet>() { };
+        private int mins;
+        private int seconds;
+        private bool isDead = false;
 
         public Pet(string name)
         {
-            Name = name;
+            this.Name = name;
             Hunger = 100;
             Energy = 100;
             Happiness = 100;
-            pets.Add(this);
+            myPets.Add(this);
+            mins = DateTime.Now.Minute;
+            seconds = DateTime.Now.Second;
         }
 
-        public static IEnumerable<Pet> GetAll()
+        public void StartThread() 
         {
-            return pets;
+            Thread t = new Thread(DeclineStats);
+            t.Start();
         }
 
-        public void UpdateAttributes() 
+        public void DeclineStats()
         {
-            
+            Hunger -= 3;
+            Energy -= 3;
+            Happiness -= 3;
+        }
+
+        public void UpdateAttributes(string attrArgs)
+        {
+            StartThread();
+            int decrimenter = 0;
+            int incrimenter = 25;
+            int currentMins = DateTime.Now.Minute;
+            int currentSeconds = DateTime.Now.Second;
+            int timeDifference = ((currentMins * 60) + currentSeconds) - ((mins * 60) + seconds);
+
+            if (timeDifference > 100)
+            {
+                decrimenter = 75;
+            }
+            else if (timeDifference > 75)
+            {
+                decrimenter = 50;
+            }
+            else if (timeDifference > 50)
+            {
+                decrimenter = 40;
+            }
+            else if (timeDifference > 25)
+            {
+                decrimenter = 30;
+            }
+            else if(timeDifference > 5) 
+            {
+                decrimenter = 20;
+            }
+            else 
+            {
+                decrimenter = 10;   
+            }
+                
+            if (attrArgs == "feed")
+            {
+                if(Hunger + incrimenter > 100)
+                {
+                    incrimenter = 100 - Hunger;
+                }
+                Hunger += incrimenter;
+                Energy -= decrimenter;
+                Happiness -= decrimenter;
+            }
+            else if (attrArgs == "sleep")
+            {
+                if (Energy + incrimenter > 100)
+                {
+                    incrimenter = 100 - Energy;
+                }
+                Energy += incrimenter;
+                Hunger -= decrimenter;
+                Happiness -= decrimenter;
+            }
+            else
+            {
+                if (Happiness + incrimenter > 100)
+                {
+                    incrimenter = 100 - Happiness;
+                }
+                Happiness += incrimenter;
+                Energy -= decrimenter;
+                Hunger -= decrimenter;
+            }
+
+            mins = DateTime.Now.Minute;
+            seconds = DateTime.Now.Second;
+        }
+
+        public bool CheckIfDead() 
+        {
+            if(Hunger <= 0 || Energy <= 0 || Happiness <= 0)
+            {
+                isDead = true;
+            }
+
+            return isDead;
         }
     }
 }

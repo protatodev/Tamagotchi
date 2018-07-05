@@ -1,10 +1,13 @@
 ﻿using System.IO;
+using System.Threading;
 using Microsoft.AspNetCore.Hosting;
+using Tamagotchi.Models;
 
-namespace Tamagotchi
+namespace Tamagotchi 
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             var host = new WebHostBuilder()
